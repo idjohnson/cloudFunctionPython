@@ -1,0 +1,41 @@
+name: GitHub Actions Docker Build
+on: push
+
+jobs:
+  HostedActions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a $ event."
+      - run: echo "🐧 This job is now running on a $ server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is $ and your repository is $."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The $ repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - uses: RafikFarhad/push-to-gcr-github-action@v4.1
+        with:
+          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text
+          registry: gcr.io
+          project_id: myanthosproject2
+          image_name: pythonfunction
+          image_tag: latest,${{ github.run_id }}
+          dockerfile: ./Dockerfile
+          context: .
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_SERVICE_KEY }}'
+      #- id: 'deploy'
+      #  uses: 'google-github-actions/deploy-cloudrun@v0'
+      #  with:
+      #    service: 'namespaces/511842454269/services/hellofresh'
+      #    image: 'gcr.io/myanthosproject2/pythonfunction:${{ github.run_id }}'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      # Run Gcloud Run Deploy as GCP gcloud command instead
+      - id: 'gcloud'
+        name: 'gcloud'
+        run: |-
+          gcloud run deploy namespaces/511842454269/services/hellofresh --image gcr.io/myanthosproject2/pythonfunction:${{ github.run_id }} --quiet --platform managed --region us-central1 --project myanthosproject2 --format json
