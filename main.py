@@ -11,7 +11,7 @@ app = Flask(__name__)
 def hello_world():
     name = os.environ.get("NAME", "World")
     apobj = apprise.Apprise()
-    apobj.add('mailto://tristan.cormac.moriarty:********@gmail.com/?to=isaac.johnson@gmail.com')
+    apobj.add('sendgrid://SENDGRIDTOKENHERE:isaac@freshbrewed.science/isaac.johnson@gmail.com')
     apobj.notify(
         body='Notified by Cloud Run Function',
         title='From Python Cloud Run',
