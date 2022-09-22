@@ -12,6 +12,7 @@ def hello_world():
     name = os.environ.get("NAME", "World")
     apobj = apprise.Apprise()
     apobj.add('sendgrid://SENDGRIDTOKENHERE:isaac@freshbrewed.science/isaac.johnson@gmail.com')
+    apobj.add('msteams://MSTEAMSTOKENHERE')
     apobj.notify(
         body='Notified by Cloud Run Function',
         title='From Python Cloud Run',
