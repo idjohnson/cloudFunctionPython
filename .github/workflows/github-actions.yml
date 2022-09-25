@@ -30,6 +30,7 @@ jobs:
 
           ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
           
+          echo ${{ github.ref }}
           #pytest -v  --cov --cov-report=xml --cov-report=html
         if: contains('
             refs/heads/main
