@@ -28,38 +28,10 @@ jobs:
           cat ./test-results/results.xml
 
           ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
+          
+          pytest -v  --cov --cov-report=xml --cov-report=html
+
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      - name: Replace Secret Tokens in Main
-        run: |
-          sed -i 's/SENDGRIDTOKENHERE/${{ secrets.SENDGRID_API_KEY }}/g' main.py
-          sed -i 's/MSTEAMSTOKENHERE/${{ secrets.TEAMSSTRING }}/g' main.py
-      - uses: RafikFarhad/push-to-gcr-github-action@v4.1
-        with:
-          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text
-          registry: gcr.io
-          project_id: myanthosproject2
-          image_name: pythonfunction
-          image_tag: latest,${{ github.run_id }}
-          dockerfile: ./Dockerfile
-          context: .
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
-        with:
-          credentials_json: '${{ secrets.GCLOUD_SERVICE_KEY }}'
-      #- id: 'deploy'
-      #  uses: 'google-github-actions/deploy-cloudrun@v0'
-      #  with:
-      #    service: 'namespaces/511842454269/services/hellofresh'
-      #    image: 'gcr.io/myanthosproject2/pythonfunction:${{ github.run_id }}'
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
-
-      # Run Gcloud Run Deploy as GCP gcloud command instead
-      - id: 'gcloud'
-        name: 'gcloud'
-        run: |-
-          gcloud run deploy namespaces/511842454269/services/hellofresh --image gcr.io/myanthosproject2/pythonfunction:${{ github.run_id }} --quiet --platform managed --region us-central1 --project myanthosproject2 --format json
