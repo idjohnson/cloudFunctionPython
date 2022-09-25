@@ -25,7 +25,7 @@ jobs:
           pwd
           ls -ltra
           ls -ltra ./test-results || true 
-          cat ./test-results/coverage.xml
+          cat ./test-results/results.xml
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
