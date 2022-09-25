@@ -30,7 +30,7 @@ jobs:
           # cat ./test-results/coverage.xml
 
           a=`cat ./test-results/coverage.xml | grep line-rate | grep 'name="."' | sed 's/^.*line-rate="\([^"]*\)".*/\1/' | tr -d '\n'`
-          b=0.80
+          b=0.98
 
           if (( $(bc <<<"$a > $b") )); then 
               echo "The Coverage has met the threshold of $b"
