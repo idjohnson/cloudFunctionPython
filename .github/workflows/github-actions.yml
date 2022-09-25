@@ -35,7 +35,7 @@ jobs:
             refs/heads/main
             origin/main
             refs/remotes/origin/main
-          ', github.ref)
+           ', github.ref)
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
