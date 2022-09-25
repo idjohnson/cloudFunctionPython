@@ -22,6 +22,8 @@ jobs:
           ls -ltra
           ls -ltra ./test-results || true 
           cat ./test-results/results.xml
+          echo
+          cat ./test-results/coverage.xml
 
           ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
           
