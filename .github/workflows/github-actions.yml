@@ -40,3 +40,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        if: contains('
+            refs/heads/main
+            origin/main
+            refs/remotes/origin/main
+           ', github.ref)
