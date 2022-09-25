@@ -16,6 +16,9 @@ jobs:
         run: |
           pip3 install -r requirements.txt
           python3 -m pytest
+          
+          # pytest --junitxml=test-results/coverage.xml
+          python3 -m pytest --cov-report xml:test-results/results.xml
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
