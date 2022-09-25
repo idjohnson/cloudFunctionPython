@@ -18,25 +18,26 @@ jobs:
           # python3 -m pytest -v -o junit_family=xunit1 --cov-report xml:test-results/coverage.xml --junitxml=test-results/results.xml
           python3 -m pytest -v --cov --cov-report xml:test-results/coverage.xml --junitxml=test-results/results.xml
 
-          pwd
-          ls -ltra
-          ls -ltra ./test-results || true 
-          cat ./test-results/results.xml
-          echo
-          cat ./test-results/coverage.xml
+          # pwd
+          # ls -ltra
+          # ls -ltra ./test-results || true 
+          # cat ./test-results/results.xml
+          # echo
+          # cat ./test-results/coverage.xml
 
           a=`cat ./test-results/coverage.xml | grep line-rate | grep 'name="."' | sed 's/^.*line-rate="\([^"]*\)".*/\1/' | tr -d '\n'`
           b=0.98
 
           if (( $(bc <<<"$a > $b") )); then 
-              echo "a is greater than b"
+              echo "The Coverage has met the threshold of $b"
           else
-              echo "a is not greater than b"
+              echo "The Coverage has not met the minimum threshold. This build will terminate.  Please increase your coverage to build and deploy."
+              exit 1
           fi
 
-          ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
-          
-          echo ${{ github.ref }}
+          # ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
+          # echo ${{ github.ref }}
+
           #pytest -v  --cov --cov-report=xml --cov-report=html
         if: contains('
             refs/heads/main
