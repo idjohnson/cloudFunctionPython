@@ -26,7 +26,7 @@ jobs:
           # cat ./test-results/coverage.xml
 
           a=`cat ./test-results/coverage.xml | grep line-rate | grep 'name="."' | sed 's/^.*line-rate="\([^"]*\)".*/\1/' | tr -d '\n'`
-          b=0.98
+          b=0.80
 
           if (( $(bc <<<"$a > $b") )); then 
               echo "The Coverage has met the threshold of $b"
@@ -39,9 +39,6 @@ jobs:
           # echo ${{ github.ref }}
 
           #pytest -v  --cov --cov-report=xml --cov-report=html
-        if: contains('
-            refs/heads/main
-           ', github.ref)
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
