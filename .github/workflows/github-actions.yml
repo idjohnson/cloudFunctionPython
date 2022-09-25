@@ -31,7 +31,7 @@ jobs:
           ls -ltra /home/runner/work/cloudFunctionPython/cloudFunctionPython/test-results
           
           #pytest -v  --cov --cov-report=xml --cov-report=html
-
+        if: contains('refs/heads/main', 'origin/main', 'refs/remotes/origin/main', github.ref)
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
