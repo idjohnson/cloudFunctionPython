@@ -34,8 +34,6 @@ jobs:
           #pytest -v  --cov --cov-report=xml --cov-report=html
         if: contains('
             refs/heads/main
-            origin/main
-            refs/remotes/origin/main
            ', github.ref)
       - uses: sonarsource/sonarqube-scan-action@master
         env:
@@ -43,6 +41,4 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         if: contains('
             refs/heads/main
-            origin/main
-            refs/remotes/origin/main
            ', github.ref)
