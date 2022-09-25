@@ -14,15 +14,18 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run Tests
         run: |
+          set -x
           pip3 install -r requirements.txt
           python3 -m pytest
           
           # pytest --junitxml=test-results/coverage.xml
           # python3 -m pytest --cov-report xml:test-results/results.xml
-          python3 -m pytest -v -o junit_family=xunit1 --cov-report xml:test-results/results.xml --cov-report html:test-results/cov_html  --junitxml=test-results/coverage.xml
+          python3 -m pytest -v -o junit_family=xunit1 --cov-report xml:test-results/coverage.xml --junitxml=test-results/results.xml
 
+          pwd
           ls -ltra
           ls -ltra ./test-results || true 
+          cat ./test-results/coverage.xml
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
