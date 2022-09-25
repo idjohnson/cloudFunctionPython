@@ -18,7 +18,7 @@ def hello_world():
     return "Hello hello {}!".format(name)
 
 @app.route("/teams")
-def hello_world():
+def hello_world2():
     name = os.environ.get("NAME", "World")
     apobj = apprise.Apprise()
     apobj.add('sendgrid://SENDGRIDTOKENHERE:isaac@freshbrewed.science/isaac.johnson@gmail.com')
@@ -29,7 +29,7 @@ def hello_world():
     return "Hello hello {}!".format(name)
 
 @app.route("/email")
-def hello_world():
+def hello_world3():
     name = os.environ.get("NAME", "World")
     apobj = apprise.Apprise()
     apobj.add('sendgrid://SENDGRIDTOKENHERE:isaac@freshbrewed.science/isaac.johnson@gmail.com')
